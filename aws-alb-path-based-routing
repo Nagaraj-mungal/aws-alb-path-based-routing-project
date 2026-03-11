@@ -1,0 +1,22 @@
+aws-alb-path-based-routing
+│
+├── README.md
+│
+├── architecture
+│   └── architecture.md
+│
+├── setup-guide
+│   └── step-by-step-setup.md
+│
+├── commands
+│   └── linux-commands.md
+│
+├── web-app
+│   ├── gmail
+│   │   └── index.html
+│   │
+│   └── drive
+│       └── index.html
+│
+└── screenshots
+    └── add-your-screenshots-here.txt
