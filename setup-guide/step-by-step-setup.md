@@ -1,108 +1,176 @@
-# Step 1: Launch EC2 Instances
+# Step-by-Step Setup Guide
 
-Create two Amazon Linux EC2 instances.
+## Step 1 Create EC2 Instances
 
-Instance 1
-Name: Gmail-Server
+Create two EC2 instances:
 
-Instance 2
-Name: Drive-Server
+1. Gmail Server
+2. Drive Server
 
-Security Group Rules
+Instance configuration:
 
-SSH - Port 22  
-HTTP - Port 80
+AMI: Amazon Linux 2
+Instance Type: t2.micro
+
+Security Group:
+
+Allow ports:
+
+22 (SSH)
+80 (HTTP)
 
 ---
 
-# Step 2: Connect to EC2
+## Step 2 Install Apache
 
-ssh -i key.pem ec2-user@public-ip
+Login to both servers.
 
----
-
-# Step 3: Install Apache Web Server
-
+```
 sudo yum update -y
 sudo yum install httpd -y
 sudo systemctl start httpd
- sudo systemctl enable httpd
-
- ---
-
-# Step 4: Create Application Directories
-
-sudo mkdir /var/www/html/gmail 
-sudo mkdir /var/www/html/drive
+sudo systemctl enable httpd
+```
 
 ---
 
-# Step 5: Deploy Applications
+## Step 3 Install Git
 
-Copy application files.
+```
+sudo yum install git -y
+```
 
 ---
 
-# Step 6: Create Target Groups
+## Step 4 Deploy Gmail Web Page
+
+Login to Gmail Server.
+
+```
+cd /var/www/html
+sudo git clone https://github.com/CloudNinjaa/gmail-main-page-template
+sudo mv gmail-main-page-template gmail
+```
+
+Verify:
+
+```
+http://Gmail-Public-IP/gmail
+```
+
+---
+
+## Step 5 Deploy Google Drive Web Page
+
+Login to Drive Server.
+
+```
+cd /var/www/html
+sudo git clone https://github.com/akshay-vmudda/Google-Drive-Clone
+sudo mv Google-Drive-Clone drive
+```
+
+Verify:
+
+```
+http://Drive-Public-IP/drive
+```
+
+---
+
+## Step 6 Create Target Groups
 
 Create two target groups.
 
-gmail-target-group
+Target Group 1
 
-Health check path:
+Name: gmail-target-grp
+Health Check Path:
 
+```
 /gmail/index.html
+```
 
-drive-target-group
+Target Group 2
 
-Health check path:
+Name: drive-target-grp
+Health Check Path:
 
+```
 /drive/index.html
+```
+
+Register respective EC2 instances.
 
 ---
 
-# Step 7: Register Targets
+## Step 7 Create Application Load Balancer
 
-Register Gmail EC2 instance to gmail-target-group.
+Go to:
 
-Register Drive EC2 instance to drive-target-group.
+EC2 → Load Balancers → Create Load Balancer
 
----
+Choose:
 
-# Step 8: Create Application Load Balancer
+Application Load Balancer
 
-Type: Internet Facing
+Configuration:
 
-Listener: HTTP Port 80
+Scheme: Internet Facing
+Listener: HTTP (80)
 
-Attach two Availability Zones.
+Attach:
 
----
+gmail-target-grp
 
-# Step 9: Configure Listener Rules
-
-Default Rule
-
-Forward → gmail-target-group
-
-Add Rule
-
-Path: /drive*
-
-Forward → drive-target-group
+Create Load Balancer.
 
 ---
 
-# Step 10: Test the Application
+## Step 8 Configure Path Based Routing
 
-Open browser
+Go to:
 
+Load Balancer → Listeners → View Rules
+
+Add new rule.
+
+Condition:
+
+```
+Path = /drive*
+```
+
+Action:
+
+Forward to:
+
+```
+drive-target-grp
+```
+
+Priority:
+
+```
+2
+```
+
+Save rule.
+
+---
+
+## Step 9 Test Application
+
+Open browser.
+
+```
 http://ALB-DNS/gmail
+```
 
-Gmail application opens.
+Gmail page loads.
 
+```
 http://ALB-DNS/drive
+```
 
-Drive application opens.
-
-This confirms successful path-based routing.
+Google Drive page loads.
