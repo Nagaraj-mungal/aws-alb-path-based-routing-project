@@ -104,6 +104,3 @@ Accessing the ALB URL with specific paths routes traffic correctly:
 
 ---
 
-## Author
-
-Nagaraj M
