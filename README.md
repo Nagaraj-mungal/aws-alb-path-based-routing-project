@@ -3,6 +3,7 @@
 ## 📌 Project Overview
 
 This project demonstrates how to design and implement a real-time, highly available web architecture using AWS Application Load Balancer (ALB) with path-based routing.
+
 The goal is to host multiple applications behind a single Load Balancer and route traffic intelligently based on URL paths instead of exposing multiple public IP addresses.
 
 ---
@@ -186,3 +187,44 @@ Designing real-time cloud architecture
 
 🙌 Conclusion
 This project demonstrates how modern cloud architectures use Application Load Balancers to efficiently manage multiple applications, ensuring scalability, reliability, and better user experience.
+---
+
+## 📸 Project Screenshots
+
+### 🔹 EC2 Instances (Running State)
+![EC2 Instances](screenshots/ec2-instances.png)
+
+---
+
+### 🔹 Gmail Application Output (/gmail)
+![Gmail Application](screenshots/gmail-app.png)
+
+---
+
+### 🔹 Drive Application Output (/drive)
+![Drive Application](screenshots/drive-app.png)
+
+---
+
+### 🔹 Google Homepage (Root URL /)
+![Google Homepage](screenshots/google-homepage.png)
+
+---
+
+### 🔹 Target Group Health Status (Healthy Instances)
+![Target Group Health](screenshots/target-group-health.png)
+
+---
+
+### 🔹 Application Load Balancer Details
+![Load Balancer](screenshots/load-balancer.png)
+
+---
+
+### 🔹 Listener Rules (Path-Based Routing Configuration)
+![Listener Rules](screenshots/listener-rules.png)
+
+---
+
+### 🔹 Final Output via ALB (Single DNS for All Apps)
+![ALB Output](screenshots/alb-output.png)
