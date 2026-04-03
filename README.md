@@ -102,7 +102,9 @@ sudo chown -R apache:apache /var/www/html
 
 Open in browser:
 http://EC2-PublicIP/gmail⁠�
+
 http://EC2-PublicIP/drive⁠�
+
 Both applications should load successfully.
 
 ---
