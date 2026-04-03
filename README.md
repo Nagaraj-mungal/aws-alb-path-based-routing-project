@@ -187,44 +187,64 @@ Designing real-time cloud architecture
 
 🙌 Conclusion
 This project demonstrates how modern cloud architectures use Application Load Balancers to efficiently manage multiple applications, ensuring scalability, reliability, and better user experience.
----
+---## 📸 Project Screenshots
 
-## 📸 Project Screenshots
+### 🔹 1. Launching EC2 Instances
+This step shows the creation of EC2 instances for Gmail and Drive applications.
 
-### 🔹 EC2 Instances (Running State)
-![EC2 Instances](screenshots/ec2-instances.png)
-
----
-
-### 🔹 Gmail Application Output (/gmail)
-![Gmail Application](screenshots/gmail-app.png)
+![Launching Gmail Instance](screenshots/launching-gmail-instance.png)
+![Launching Drive Instance](screenshots/launching-drive-instance.png)
 
 ---
 
-### 🔹 Drive Application Output (/drive)
-![Drive Application](screenshots/drive-app.png)
+### 🔹 2. Apache Installation on Gmail Instance
+Installation and configuration of Apache web server on Gmail EC2 instance.
+
+![Apache Installation Gmail 1](screenshots/apache-installation-in-gmail-instance-1.png)
+![Apache Installation Gmail 2](screenshots/apache-installation-in-gmail-instance-2.png)
 
 ---
 
-### 🔹 Google Homepage (Root URL /)
-![Google Homepage](screenshots/google-homepage.png)
+### 🔹 3. Apache Installation on Drive Instance
+Installation and configuration of Apache web server on Drive EC2 instance.
+
+![Apache Installation Drive 1](screenshots/apache-installation-in-drive-instance-1.png)
+![Apache Installation Drive 2](screenshots/apache-installation-in-drive-instance-2.png)
 
 ---
 
-### 🔹 Target Group Health Status (Healthy Instances)
-![Target Group Health](screenshots/target-group-health.png)
+### 🔹 4. Gmail Application Deployment Output
+Successfully deployed Gmail application and verified using EC2 Public IP.
+
+![Gmail Application](screenshots/gmail-application-opens.png)
 
 ---
 
-### 🔹 Application Load Balancer Details
-![Load Balancer](screenshots/load-balancer.png)
+### 🔹 5. Drive Application Deployment Output
+Successfully deployed Drive application and verified using EC2 Public IP.
+
+![Drive Application](screenshots/drive-application-opens.png)
 
 ---
 
-### 🔹 Listener Rules (Path-Based Routing Configuration)
+### 🔹 6. Target Groups Configuration
+Creation of target groups and verification of healthy instances.
+
+![Target Groups](screenshots/target-groups.png)
+
+---
+
+### 🔹 7. Application Load Balancer Setup
+Configuration of Application Load Balancer with listeners and availability zones.
+
+![Application Load Balancer](screenshots/application-load-balancer.png)
+
+---
+
+### 🔹 8. Listener Rules (Path-Based Routing)
+Configuration of path-based routing rules to direct traffic to respective target groups.
+
 ![Listener Rules](screenshots/listener-rules.png)
 
----
 
-### 🔹 Final Output via ALB (Single DNS for All Apps)
-![ALB Output](screenshots/alb-output.png)
+
