@@ -211,40 +211,40 @@ Installation and configuration of Apache web server on Drive EC2 instance.
 ![Apache Installation Drive 1](screenshots/apache-installation-in-drive-instance-1.png)
 ![Apache Installation Drive 2](screenshots/apache-installation-in-drive-instance-2.png)
 
----
+--- 
 
-### 🔹 4. Gmail Application Deployment Output
-Successfully deployed Gmail application and verified using EC2 Public IP.
-
-![Gmail Application](screenshots/gmail-application-opens.png)
-
----
-
-### 🔹 5. Drive Application Deployment Output
-Successfully deployed Drive application and verified using EC2 Public IP.
-
-![Drive Application](screenshots/drive-application-opens.png)
-
----
-
-### 🔹 6. Target Groups Configuration
+### 🔹 4. Target Groups Configuration
 Creation of target groups and verification of healthy instances.
 
 ![Target Groups](screenshots/target-groups.png)
 
 ---
 
-### 🔹 7. Application Load Balancer Setup
+### 🔹 5. Application Load Balancer Setup
 Configuration of Application Load Balancer with listeners and availability zones.
 
 ![Application Load Balancer](screenshots/application-load-balancer.png)
 
 ---
 
-### 🔹 8. Listener Rules (Path-Based Routing)
+### 🔹 6. Listener Rules (Path-Based Routing)
 Configuration of path-based routing rules to direct traffic to respective target groups.
 
 ![Listener Rules](screenshots/listener-rules.png)
+
+---
+
+### 🔹 7. Gmail Application Deployment Output
+Successfully deployed Gmail application and verified using EC2 Public IP.
+
+![Gmail Application](screenshots/gmail-application-opens.png)
+
+---
+
+### 🔹 8. Drive Application Deployment Output
+Successfully deployed Drive application and verified using EC2 Public IP.
+
+![Drive Application](screenshots/drive-application-opens.png)
 
 
 
