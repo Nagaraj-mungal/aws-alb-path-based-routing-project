@@ -1,106 +1,188 @@
-# AWS ALB Path-Based Routing Project
+# 🚀 Application Load Balancer with Path-Based Routing (AWS)
 
-## Project Overview
+## 📌 Project Overview
 
-This project demonstrates **Path-Based Routing using AWS Application Load Balancer (ALB)**.  
-
-Two EC2 instances host two different web applications:
-
-* Gmail Web Page  
-* Google Drive Web Page  
-
-Traffic is routed based on URL path using **Application Load Balancer**.
-
-Example:
+This project demonstrates how to design and implement a real-time, highly available web architecture using AWS Application Load Balancer (ALB) with path-based routing.
+The goal is to host multiple applications behind a single Load Balancer and route traffic intelligently based on URL paths instead of exposing multiple public IP addresses.
 
 ---
 
-## Architecture
+## 🏢 Real-Time Scenario
 
-Client → Application Load Balancer → Target Groups → EC2 Instances
-User Request
-|
-v
-Application Load Balancer
-|
+In production environments, companies host multiple applications under one domain:
 
-| |
-gmail-target-grp drive-target-grp
-| |
-Gmail EC2 Drive EC2
+- example.com/gmail  
+- example.com/drive  
 
-**Architecture Diagram:**
+Instead of managing separate servers and URLs, an Application Load Balancer is used to:
 
-![Application Load Balancer](screenshots/application-load-balancer.png)
+- Accept incoming user requests  
+- Inspect the request path  
+- Route traffic to the correct backend server  
 
----
+In this project:
 
-## AWS Services Used
-
-* EC2
-* Application Load Balancer
-* Target Groups
-* Security Groups
-* GitHub
-* Apache HTTP Server
+- `/gmail` → Gmail Application (EC2 Instance 1)  
+- `/drive` → Drive Application (EC2 Instance 2)  
 
 ---
 
-## Project Workflow & Screenshots
+## ☁️ Services Used
 
-### 1. Launch EC2 Instances
-
-**Gmail Instance:**
-
-![Launching Gmail Instance](screenshots/launching-gmail-instance.png)  
-
-**Drive Instance:**
-
-![Launching Drive Instance](screenshots/launching-drive-instance.png)  
+- AWS EC2 (Elastic Compute Cloud)  
+- Application Load Balancer (ALB)  
+- Target Groups  
+- Security Groups  
 
 ---
 
-### 2. Install Apache Web Server
+## 🛠️ Technologies Used
 
-**Gmail Instance (Step 1 & 2):**
-
-![Apache Installation in Gmail Instance 1](screenshots/apache-installation-in-gmail-instance-1.png)  
-![Apache Installation in Gmail Instance 2](screenshots/apache-installation-in-gmail-instance-2.png)  
-
-**Drive Instance (Step 1 & 2):**
-
-![Apache Installation in Drive Instance 1](screenshots/apache-installation-in-drive-instance-1.png)  
-![Apache Installation in Drive Instance 2](screenshots/apache-installation-in-drive-instance-2.png)  
+- Apache (httpd)  
+- Git  
+- Linux (Amazon Linux)  
 
 ---
 
-### 3. Configure Target Groups
+## 🏗️ Architecture
 
-![Target Groups](screenshots/target-groups.png)  
+User → Application Load Balancer → Target Groups → EC2 Instances  
 
----
-
-### 4. Configure Listener Rules
-
-![Listener Rules](screenshots/listener-rules.png)  
+- ALB works at Layer 7 (HTTP/HTTPS)  
+- Routes traffic based on path  
+- Performs health checks on instances  
 
 ---
 
-### 5. Test Applications
+## 🖥️ Implementation Steps
 
-**Gmail Application Open:**
+### 1️⃣ Launch EC2 Instances
 
-![Gmail Application Opens](screenshots/gmail-application-opens.png)  
+Create two EC2 instances:
 
-**Drive Application Open:**
+- Gmail Server  
+- Drive Server  
 
-![Drive Application Opens](screenshots/drive-application-opens.png)  
-
----
-
-## Expected Output
-
-Accessing the ALB URL with specific paths routes traffic correctly:
+Configure Security Group:
+- Allow SSH (Port 22)  
+- Allow HTTP (Port 80)  
 
 ---
 
+### 2️⃣ Install Apache & Git
+
+Run on both servers:
+sudo yum update -y
+sudo yum install httpd -y
+sudo systemctl start httpd
+sudo systemctl enable httpd
+sudo yum install git -y
+
+---
+
+### 3️⃣ Deploy Applications
+
+cd /var/www/html
+
+# Gmail Application
+git clone https://github.com/CloudNinjaa/gmail-main-page-template
+mv gmail-main-page-template gmail
+
+# Drive Application
+git clone https://github.com/akshay-mudda/Google-Drive-Clone
+mv Google-Drive-Clone drive
+
+# Set permissions
+sudo chown -R apache:apache /var/www/html
+
+---
+
+### 4️⃣ Verify Applications
+
+Open in browser:
+http://EC2-PublicIP/gmail⁠�
+http://EC2-PublicIP/drive⁠�
+Both applications should load successfully.
+
+---
+
+### 5️⃣ Create Target Groups
+
+Create two target groups:
+Gmail Target Group
+Name: Gmail-target-grp
+Health Check Path: /gmail/index.html
+Drive Target Group
+Name: drive-target-grp
+Health Check Path: /drive/index.html
+Register respective EC2 instances.
+
+---
+
+### 6️⃣ Create Application Load Balancer
+
+Type: Internet Facing
+Listener: HTTP (Port 80)
+Select 2 Availability Zones
+Default Target Group → Gmail-target-grp
+
+---
+
+###7️⃣ Configure Path-Based Routing
+
+Go to: EC2 → Load Balancer → Listeners → Rules → Add Rule
+Condition:
+
+Path = /drive*
+Action:
+
+Forward to drive-target-grp
+Priority: 2
+---
+
+🌐 Final Output
+
+Access applications using ALB DNS:
+http://ALB-DNS/gmail⁠�
+http://ALB-DNS/drive⁠�
+
+---
+
+##🔎 How It Works
+
+User sends request to Load Balancer
+ALB checks the URL path
+Routing logic:
+/gmail → Gmail Server
+/drive → Drive Server
+Target Groups forward request to EC2 instances
+Health checks ensure only healthy instances receive traffic
+
+---
+
+##🚨 Troubleshooting
+
+🔴 502 Bad Gateway
+Cause: Apache service not running
+Fix: sudo systemctl start httpd
+
+🔴 503 Service Unavailable
+Cause:
+No healthy targets
+Incorrect health check path
+Fix:
+Verify /gmail/index.html and /drive/index.html exist
+Check Target Group health status
+
+---
+
+🎯 Key Learning Outcomes
+
+Understanding Layer 7 Load Balancing
+Implementing Path-Based Routing
+Configuring Target Groups and Health Checks
+Troubleshooting ALB Errors
+Designing real-time cloud architecture
+
+🙌 Conclusion
+This project demonstrates how modern cloud architectures use Application Load Balancers to efficiently manage multiple applications, ensuring scalability, reliability, and better user experience.
